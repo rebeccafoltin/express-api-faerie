@@ -1,8 +1,8 @@
 
 
 ERD:
-express-api-faerie/Images/ERD.png
 
 Github Link:
+https://github.com/rebeccafoltin/express-api-faerie
 
 Deployed Link:
