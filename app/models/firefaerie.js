@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
-const exampleSchema = new mongoose.Schema({
-  title: {
+const firefaerieSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true
   },
-  text: {
-    type: String,
+  winged: {
+    type: Boolean,
     required: true
   },
   owner: {
@@ -18,4 +18,5 @@ const exampleSchema = new mongoose.Schema({
   timestamps: true
 })
 
-module.exports = mongoose.model('Example', exampleSchema)
+
+module.exports = mongoose.model('Firefaerie', firefaerieSchema)
