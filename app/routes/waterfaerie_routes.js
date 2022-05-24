@@ -3,7 +3,7 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// pull in Mongoose model for waterfaeries
+// pull in Mongoose model for waterfaerie
 const Waterfaerie = require('../models/waterfaerie')
 
 // this is a collection of methods that help us detect situations when we need
@@ -28,24 +28,24 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /waterfaeries
-router.get('/waterfaeries', requireToken, (req, res, next) => {
+// GET /waterfaerie
+router.get('/waterfaerie', requireToken, (req, res, next) => {
   Waterfaerie.find()
-    .then(waterfaeries => {
-      // `waterfaeries` will be an array of Mongoose documents
+    .then(waterfaerie => {
+      // `waterfaerie` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return waterfaeries.map(waterfaerie => waterfaerie.toObject())
+      return waterfaerie.map(waterfaerie => waterfaerie.toObject())
     })
-    // respond with status 200 and JSON of the waterfaeries
-    .then(waterfaeries => res.status(200).json({ waterfaeries: waterfaeries }))
+    // respond with status 200 and JSON of the waterfaerie
+    .then(waterfaerie => res.status(200).json({ waterfaerie: waterfaerie }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
 
 // SHOW
-// GET /waterfaeries/5a7db6c74d55bc51bdf39793
-router.get('/waterfaeries/:id', requireToken, (req, res, next) => {
+// GET /waterfaerie/5a7db6c74d55bc51bdf39793
+router.get('/waterfaerie/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Waterfaerie.findById(req.params.id)
     .then(handle404)
@@ -56,8 +56,8 @@ router.get('/waterfaeries/:id', requireToken, (req, res, next) => {
 })
 
 // CREATE
-// POST /waterfaeries
-router.post('/waterfaeries', requireToken, (req, res, next) => {
+// POST /waterfaerie
+router.post('/waterfaerie', requireToken, (req, res, next) => {
   // set owner of new waterfaerie to be current user
   req.body.waterfaerie.owner = req.user.id
 
@@ -73,8 +73,8 @@ router.post('/waterfaeries', requireToken, (req, res, next) => {
 })
 
 // UPDATE
-// PATCH /waterfaeries/5a7db6c74d55bc51bdf39793
-router.patch('/waterfaeries/:id', requireToken, removeBlanks, (req, res, next) => {
+// PATCH /waterfaerie/5a7db6c74d55bc51bdf39793
+router.patch('/waterfaerie/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.waterfaerie.owner
@@ -96,8 +96,8 @@ router.patch('/waterfaeries/:id', requireToken, removeBlanks, (req, res, next) =
 })
 
 // DESTROY
-// DELETE /waterfaeries/5a7db6c74d55bc51bdf39793
-router.delete('/waterfaeries/:id', requireToken, (req, res, next) => {
+// DELETE /waterfaerie/5a7db6c74d55bc51bdf39793
+router.delete('/waterfaerie/:id', requireToken, (req, res, next) => {
   Waterfaerie.findById(req.params.id)
     .then(handle404)
     .then(waterfaerie => {

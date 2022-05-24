@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# EMAIL="curlycurl@curl.com"
+# PASSWORD="curl"
+
 API="http://localhost:4741"
 URL_PATH="/sign-in"
 

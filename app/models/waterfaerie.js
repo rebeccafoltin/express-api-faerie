@@ -6,7 +6,7 @@ const waterfaerieSchema = new mongoose.Schema({
     required: true
   },
   winged: {
-    type: Boolean,
+    type: String,
     required: true
   },
   owner: {

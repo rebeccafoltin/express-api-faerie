@@ -1,9 +1,11 @@
 #!/bin/sh
 
-API="http://localhost:4741"
-URL_PATH="/examples"
+# TOKEN="9d2f92fb299179b8835e732b48422d85"
 
-curl "${API}${URL_PATH}/${ID}" \
+API="http://localhost:4741"
+URL_PATH="/waterfaerie"
+
+curl "${API}${URL_PATH}" \
   --include \
   --request GET \
   --header "Authorization: Bearer ${TOKEN}"

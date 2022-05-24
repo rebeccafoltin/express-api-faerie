@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# TOKEN="9d2f92fb299179b8835e732b48422d85"
+
 API="http://localhost:4741"
-URL_PATH="/examples"
+URL_PATH="/waterfaerie"
 
 curl "${API}${URL_PATH}/${ID}" \
   --include \
@@ -9,8 +11,9 @@ curl "${API}${URL_PATH}/${ID}" \
   --header "Content-Type: application/json" \
 --header "Authorization: Bearer ${TOKEN}" \
 --data '{
-    "example": {
-      "text": "'"${TEXT}"'"
+    "waterfaerie": {
+      "name": "'"${NAME}"'",
+      "winged": "'"${WINGED}"'"
     }
   }'
 
