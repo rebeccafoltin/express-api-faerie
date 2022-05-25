@@ -4,10 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 // require route files
-const airfaerieRoutes = require('./app/routes/airfaerie_routes')
-const earthfaerieRoutes = require('./app/routes/earthfaerie_routes')
-const firefaerieRoutes = require('./app/routes/firefaerie_routes')
-const waterfaerieRoutes = require('./app/routes/waterfaerie_routes')
+const faeworldRoutes = require('./app/routes/faeworld_routes')
 const userRoutes = require('./app/routes/user_routes')
 
 // require middleware
@@ -59,10 +56,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use(airfaerieRoutes)
-app.use(earthfaerieRoutes)
-app.use(firefaerieRoutes)
-app.use(waterfaerieRoutes)
+app.use(faeworldRoutes)
 app.use(userRoutes)
 
 // register error handling middleware

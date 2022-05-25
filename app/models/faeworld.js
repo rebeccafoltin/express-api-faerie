@@ -1,12 +1,16 @@
 const mongoose = require('mongoose')
 
-const firefaerieSchema = new mongoose.Schema({
+const faeworldSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
-  winged: {
-    type: Boolean,
+  power: {
+    type: String,
+    required: true
+  },
+  region: {
+    type: String,
     required: true
   },
   owner: {
@@ -19,4 +23,4 @@ const firefaerieSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Firefaerie', firefaerieSchema)
+module.exports = mongoose.model('Faeworld', faeworldSchema)
