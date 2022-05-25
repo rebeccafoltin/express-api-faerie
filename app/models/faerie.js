@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const faeworldSchema = new mongoose.Schema({
+const faerieSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -23,4 +23,4 @@ const faeworldSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Faeworld', faeworldSchema)
+module.exports = mongoose.model('Faerie', faerieSchema)

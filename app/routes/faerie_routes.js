@@ -3,8 +3,8 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// pull in Mongoose model for faeworld
-const Faeworld = require('../models/faeworld')
+// pull in Mongoose model for faerie
+const Faerie = require('../models/faerie')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -17,7 +17,7 @@ const handle404 = customErrors.handle404
 const requireOwnership = customErrors.requireOwnership
 
 // this is middleware that will remove blank fields from `req.body`, e.g.
-// { faeworld: { title: '', text: 'foo' } } -> { faeworld: { text: 'foo' } }
+// { faerie: { title: '', text: 'foo' } } -> { faerie: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -28,43 +28,43 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /faeworld
-router.get('/faeworld', requireToken, (req, res, next) => {
-  Faeworld.find()
-    .then(faeworld => {
-      // `faeworld` will be an array of Mongoose documents
+// GET /faerie
+router.get('/faerie', requireToken, (req, res, next) => {
+  Faerie.find()
+    .then(faerie => {
+      // `faerie` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return faeworld.map(faeworld => faeworld.toObject())
+      return faerie.map(faerie => faerie.toObject())
     })
-    // respond with status 200 and JSON of the faeworld
-    .then(faeworld => res.status(200).json({ faeworld: faeworld }))
+    // respond with status 200 and JSON of the faerie
+    .then(faerie => res.status(200).json({ faerie: faerie }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
 
 // SHOW
-// GET /faeworld/5a7db6c74d55bc51bdf39793
-router.get('/faeworld/:id', requireToken, (req, res, next) => {
+// GET /faerie/5a7db6c74d55bc51bdf39793
+router.get('/faerie/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
-  Faeworld.findById(req.params.id)
+  Faerie.findById(req.params.id)
     .then(handle404)
-    // if `findById` is succesful, respond with 200 and "faeworld" JSON
-    .then(faeworld => res.status(200).json({ faeworld: faeworld.toObject() }))
+    // if `findById` is succesful, respond with 200 and "faerie" JSON
+    .then(faerie => res.status(200).json({ faerie: faerie.toObject() }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
 
 // CREATE
-// POST /faeworld
-router.post('/faeworld', requireToken, (req, res, next) => {
-  // set owner of new faeworld to be current user
-  req.body.faeworld.owner = req.user.id
+// POST /faerie
+router.post('/faerie', requireToken, (req, res, next) => {
+  // set owner of new faerie to be current user
+  req.body.faerie.owner = req.user.id
 
-  Faeworld.create(req.body.faeworld)
-    // respond to succesful `create` with status 201 and JSON of new "faeworld"
-    .then(faeworld => {
-      res.status(201).json({ faeworld: faeworld.toObject() })
+  Faerie.create(req.body.faerie)
+    // respond to succesful `create` with status 201 and JSON of new "faerie"
+    .then(faerie => {
+      res.status(201).json({ faerie: faerie.toObject() })
     })
     // if an error occurs, pass it off to our error handler
     // the error handler needs the error message and the `res` object so that it
@@ -73,21 +73,21 @@ router.post('/faeworld', requireToken, (req, res, next) => {
 })
 
 // UPDATE
-// PATCH /faeworld/5a7db6c74d55bc51bdf39793
-router.patch('/faeworld/:id', requireToken, removeBlanks, (req, res, next) => {
+// PATCH /faerie/5a7db6c74d55bc51bdf39793
+router.patch('/faerie/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
-  delete req.body.faeworld.owner
+  delete req.body.faerie.owner
 
-  Faeworld.findById(req.params.id)
+  Faerie.findById(req.params.id)
     .then(handle404)
-    .then(faeworld => {
+    .then(faerie => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
-      requireOwnership(req, faeworld)
+      requireOwnership(req, faerie)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return faeworld.updateOne(req.body.faeworld)
+      return faerie.updateOne(req.body.faerie)
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
@@ -96,15 +96,15 @@ router.patch('/faeworld/:id', requireToken, removeBlanks, (req, res, next) => {
 })
 
 // DESTROY
-// DELETE /faeworld/5a7db6c74d55bc51bdf39793
-router.delete('/faeworld/:id', requireToken, (req, res, next) => {
-  Faeworld.findById(req.params.id)
+// DELETE /faerie/5a7db6c74d55bc51bdf39793
+router.delete('/faerie/:id', requireToken, (req, res, next) => {
+  Faerie.findById(req.params.id)
     .then(handle404)
-    .then(faeworld => {
-      // throw an error if current user doesn't own `faeworld`
-      requireOwnership(req, faeworld)
-      // delete the faeworld ONLY IF the above didn't throw
-      faeworld.deleteOne()
+    .then(faerie => {
+      // throw an error if current user doesn't own `faerie`
+      requireOwnership(req, faerie)
+      // delete the faerie ONLY IF the above didn't throw
+      faerie.deleteOne()
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
