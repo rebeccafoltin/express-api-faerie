@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const faerieSchema = new mongoose.Schema({
-  name: {
+  faeriename: {
     type: String,
     required: true
   },

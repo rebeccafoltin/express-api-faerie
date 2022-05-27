@@ -29,7 +29,7 @@ const router = express.Router()
 
 // INDEX
 // GET /faerie
-router.get('/faerie', requireToken, (req, res, next) => {
+router.get('/index-faerie', requireToken, (req, res, next) => {
   Faerie.find()
     .then(faerie => {
       // `faerie` will be an array of Mongoose documents
@@ -45,7 +45,7 @@ router.get('/faerie', requireToken, (req, res, next) => {
 
 // SHOW
 // GET /faerie/5a7db6c74d55bc51bdf39793
-router.get('/faerie/:id', requireToken, (req, res, next) => {
+router.get('/show-faerie/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Faerie.findById(req.params.id)
     .then(handle404)
@@ -57,7 +57,7 @@ router.get('/faerie/:id', requireToken, (req, res, next) => {
 
 // CREATE
 // POST /faerie
-router.post('/faerie', requireToken, (req, res, next) => {
+router.post('/create-faerie', requireToken, (req, res, next) => {
   // set owner of new faerie to be current user
   req.body.faerie.owner = req.user.id
 
@@ -74,7 +74,7 @@ router.post('/faerie', requireToken, (req, res, next) => {
 
 // UPDATE
 // PATCH /faerie/5a7db6c74d55bc51bdf39793
-router.patch('/faerie/:id', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/update-faerie/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.faerie.owner
@@ -97,7 +97,7 @@ router.patch('/faerie/:id', requireToken, removeBlanks, (req, res, next) => {
 
 // DESTROY
 // DELETE /faerie/5a7db6c74d55bc51bdf39793
-router.delete('/faerie/:id', requireToken, (req, res, next) => {
+router.delete('/delete-faerie/:id', requireToken, (req, res, next) => {
   Faerie.findById(req.params.id)
     .then(handle404)
     .then(faerie => {
