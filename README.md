@@ -13,6 +13,7 @@ user can delete their games
 
 **ERD**
 ![erd](/express-api-faerie/Images/erd.png)
+
 https://photos.app.goo.gl/kfqDrzZewNQJpDJD8 
 
 **Github Link**
