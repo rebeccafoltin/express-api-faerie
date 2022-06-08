@@ -49,7 +49,7 @@ Welcome to Faerie Path, a Database for Spiritual Denizens! Faeriepath is an app 
 |          |          |       |         |
 
 ### Entity Relationship Diagram
-![express-api-faerie/Images/erd.png](express-api-faerie/Images/erd.png)
+![erd.png](erd.png)
 https://photos.app.goo.gl/kfqDrzZewNQJpDJD8 
 
 ### Wireframe
