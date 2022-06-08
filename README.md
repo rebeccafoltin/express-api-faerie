@@ -28,7 +28,7 @@ Welcome to Faerie Path, a Database for Spiritual Denizens! Faeriepath is an app 
 ### Client
 - Created sign up/in/out with React
 - Created CRUD actions with React
-## Personal Touches
+### Personal Touches
 - Found classic faerie art work by Brian Froud and styled it with React
 
 ## User Stories
