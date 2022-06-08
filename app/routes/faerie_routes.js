@@ -27,34 +27,6 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-// INDEX
-// GET /faerie
-router.get('/index-faerie', requireToken, (req, res, next) => {
-  Faerie.find()
-    .then(faerie => {
-      // `faerie` will be an array of Mongoose documents
-      // we want to convert each one to a POJO, so we use `.map` to
-      // apply `.toObject` to each one
-      return faerie.map(faerie => faerie.toObject())
-    })
-    // respond with status 200 and JSON of the faerie
-    .then(faerie => res.status(200).json({ faerie: faerie }))
-    // if an error occurs, pass it to the handler
-    .catch(next)
-})
-
-// SHOW
-// GET /faerie/5a7db6c74d55bc51bdf39793
-router.get('/show-faerie/:id', requireToken, (req, res, next) => {
-  // req.params.id will be set based on the `:id` in the route
-  Faerie.findById(req.params.id)
-    .then(handle404)
-    // if `findById` is succesful, respond with 200 and "faerie" JSON
-    .then(faerie => res.status(200).json({ faerie: faerie.toObject() }))
-    // if an error occurs, pass it to the handler
-    .catch(next)
-})
-
 // CREATE
 // POST /faerie
 router.post('/create-faerie', requireToken, (req, res, next) => {
@@ -72,9 +44,21 @@ router.post('/create-faerie', requireToken, (req, res, next) => {
     .catch(next)
 })
 
+// READ
+// GET /faerie/5a7db6c74d55bc51bdf39793
+router.get('/faerie/:id', requireToken, (req, res, next) => {
+  // req.params.id will be set based on the `:id` in the route
+  Faerie.findById(req.params.id)
+    .then(handle404)
+    // if `findById` is succesful, respond with 200 and "faerie" JSON
+    .then(faerie => res.status(200).json({ faerie: faerie.toObject() }))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+})
+
 // UPDATE
 // PATCH /faerie/5a7db6c74d55bc51bdf39793
-router.patch('/update-faerie/:id', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/faerie/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.faerie.owner
@@ -97,7 +81,7 @@ router.patch('/update-faerie/:id', requireToken, removeBlanks, (req, res, next) 
 
 // DESTROY
 // DELETE /faerie/5a7db6c74d55bc51bdf39793
-router.delete('/delete-faerie/:id', requireToken, (req, res, next) => {
+router.delete('/faerie/:id', requireToken, (req, res, next) => {
   Faerie.findById(req.params.id)
     .then(handle404)
     .then(faerie => {
@@ -108,6 +92,22 @@ router.delete('/delete-faerie/:id', requireToken, (req, res, next) => {
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+})
+
+// INDEX
+// GET /faerie
+router.get('/faeries', requireToken, (req, res, next) => {
+  Faerie.find()
+    .then(faerie => {
+      // `faerie` will be an array of Mongoose documents
+      // we want to convert each one to a POJO, so we use `.map` to
+      // apply `.toObject` to each one
+      return faerie.map(faerie => faerie.toObject())
+    })
+    // respond with status 200 and JSON of the faerie
+    .then(faerie => res.status(200).json({ faerie: faerie }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
