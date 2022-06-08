@@ -16,8 +16,20 @@ Welcome to Faerie Path, a Database for Spiritual Denizens! Faeriepath is an app 
 - Run ``npm install`` in the command line
 - Run ``npm run server`` in the command line
 
-## Project Planning
--
+## Project Planning 
+- Created User Stories
+- Created Wireframes
+- Created ERD
+- Set up environment by downloading GA provided React Client and Express API templates
+### API
+- Created resource end points
+- Tested resource's end points with curl scripts 
+- Added User ownership to resource controller
+### Client
+- Created sign up/in/out with React
+- Created CRUD actions with React
+## Personal Touches
+- Found classic faerie art work by Brian Froud and styled it with React
 
 ## User Stories
 - User can sign up.
